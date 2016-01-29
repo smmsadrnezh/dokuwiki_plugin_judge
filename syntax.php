@@ -402,9 +402,9 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
                             if ($media_answer_exist)
                                 $html .= '<div class="judge"><p><a target="_blank" href="?tab_files=files&do=media&ns=' . $data['judge'] . '">' . $this->getLang('btn_edit_testcase_long') . '</a></p></div>';
                             elseif ($page_answer_exist)
-                                $html .= '<div class="judge"><p><a target="_blank" href="' . $data['judge'] . '">' . $this->getLang('btn_edit_testcase_short') . '</a></p></div>';
+                                $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['judge'] . '">' . $this->getLang('btn_edit_testcase_short') . '</a></p></div>';
                             else
-                                $html .= '<div class="judge"><p>' . $this->getLang('btn_submit_testcase') . ' (<a target="_blank" href="' . $data['judge'] . '?do=edit">' . $this->getLang('btn_submit_testcase_short') . '</a> - <a target="_blank" href="?tab_files=upload&do=media&ns=' . $data['judge'] . '">' . $this->getLang('btn_submit_testcase_long') . '</a>)</p></div>';
+                                $html .= '<div class="judge"><p>' . $this->getLang('btn_submit_testcase') . ' (<a target="_blank" href="' . DOKU_URL . $data['judge'] . '?do=edit">' . $this->getLang('btn_submit_testcase_short') . '</a> - <a target="_blank" href="?tab_files=upload&do=media&ns=' . $data['judge'] . '">' . $this->getLang('btn_submit_testcase_long') . '</a>)</p></div>';
 
                         } else {
                             if ($page_answer_exist)
@@ -414,7 +414,7 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
                         }
                     }
                 } else
-                    $html .= '<div class="judge"><p><a target="_blank" href="' . $data['problem_name'] . "?do=edit" . '">' . $this->getLang('btn_create_question_page') . '</a></p></div>';
+                    $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['problem_name'] . "?do=edit" . '">' . $this->getLang('btn_create_question_page') . '</a></p></div>';
             }
         }
 
