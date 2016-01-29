@@ -408,9 +408,9 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
 
                         } else {
                             if ($page_answer_exist)
-                                $html .= '<div class="judge"><p><a target="_blank" href="' . $data['judge'] . '">' . $this->getLang('btn_edit_correct_answer') . '</a></p></div>';
+                                $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['judge'] . '">' . $this->getLang('btn_edit_correct_answer') . '</a></p></div>';
                             else
-                                $html .= '<div class="judge"><p><a target="_blank" href="' . $data['judge'] . "?do=edit" . '">' . $this->getLang('btn_submit_correct_answer') . '</a></p></div>';
+                                $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['judge'] . "?do=edit" . '">' . $this->getLang('btn_submit_correct_answer') . '</a></p></div>';
                         }
                     }
                 } else
