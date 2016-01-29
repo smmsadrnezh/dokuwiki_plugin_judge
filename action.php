@@ -52,7 +52,7 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
     {
         if ($_SERVER['REMOTE_USER']) {
             $event->data['items'] = array_slice($event->data['items'], 0, -1, true)
-                + array('submissions' => '<li ><a href="start?do=submissions" id="user_submissions" rel="nofollow" title="' . $this->getLang('btn_my_submissions') . '">' . $this->getLang('btn_my_submissions') . '</a></li>')
+                + array('submissions' => '<li ><a href="' . DOKU_URL . '?do=submissions" id="user_submissions" rel="nofollow" title="' . $this->getLang('btn_my_submissions') . '">' . $this->getLang('btn_my_submissions') . '</a></li>')
                 + array_slice($event->data['items'], -1, 1, true);
         }
     }

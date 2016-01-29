@@ -259,12 +259,7 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
     {
         global $conf, $USERINFO;
 
-        $html = '<script src="lib/plugins/judge/ajax.js" charset="utf-8" type="text/javascript"></script>';
-
-//         DOKU_BASE . DOKU_SCRIPT
-//        $numbers = plugin_load('helper', 'judge_numbers');
-//        $answer = $numbers->parseNumber("۱۲۳");
-//        $html .= '<h1>' . DOKU_SCRIPT .  '</h1>';
+        $html = '';
 
         /** show plugin to logged in user */
         if ($_SERVER['REMOTE_USER']) {
