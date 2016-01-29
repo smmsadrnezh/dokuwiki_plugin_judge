@@ -395,7 +395,7 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
             };
 
 
-            if (in_array($this->getConf('editors_group'), $USERINFO['grps'])) {
+            if (in_array($this->getConf('editors_group'), $USERINFO['grps']) || in_array("admin", $USERINFO['grps'])) {
                 if (page_exists($data['problem_name'])) {
                     if (auth_quickaclcheck($data['judge']) >= AUTH_EDIT) {
                         if ($data['type'] === "test-case") {

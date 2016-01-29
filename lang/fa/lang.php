@@ -57,6 +57,7 @@ $lang['menu'] = 'نمایش و حذف ارسال‌های کاربران';
 
 $lang['btn_get_submissions']    = 'نمایش';
 $lang['btn_delete_submissions']  = 'حذف';
+$lang['all_users']        = 'همهٔ کاربران';
 
 $lang['intro_message']        = 'پارامتر‌های ارسال‌های کاربران را انتخاب و گزینهٔ نمایش یا حذف را انتخاب نمایید.';
 $lang['empty_result']        = 'هیچ ارسالی با این مشخصات وجود ندارد.';

@@ -109,7 +109,7 @@ function testCaseSubmit() {
             status_code: 0
         },
         function (data) {
-            appendResult("در حال اجرا", data.row_number, data.date);
+            appendResult("running", data.row_number, data.date);
             judge(data.id);
         },
         'json'

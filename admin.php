@@ -53,7 +53,7 @@ class admin_plugin_judge extends DokuWiki_Admin_Plugin
             <label class="block">' . $this->getLang("question_name") . ': <input name="problem_name" type="text" /></label>
             <label class="block">' . $this->getLang("sender") . ':
             <select name="user">
-            <option value="">همهٔ کاربران</option>';
+            <option value="">' . $this->getLang("all_users") .'</option>';
         while ($user = current($users)){
             $html .= '<option value="' . key($users) . '">' . $user["name"] . '</option>';
             next($users);

@@ -57,6 +57,7 @@ $lang['menu'] = 'View & Delete Users Submissions';
 
 $lang['btn_get_submissions']    = 'View';
 $lang['btn_delete_submissions']  = 'Delete';
+$lang['all_users']        = 'All users';
 
 $lang['intro_message']        = 'Fill the following form with users submissions parameters, then press view or delete button.';
 $lang['empty_result']        = 'No result.';
