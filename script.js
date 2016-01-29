@@ -36,6 +36,7 @@ var type;
 var language;
 var runtime;
 var path;
+var problem_name_id;
 
 function submitKey(problem_name, user, language, type, runtime, path) {
 
@@ -46,6 +47,8 @@ function submitKey(problem_name, user, language, type, runtime, path) {
     window["language"] = language;
     window["runtime"] = runtime;
     window["path"] = path;
+
+    window["problem_name_id"] = problem_name.replace(/:/g, "\\:");
 
     if (type === "output-only" && !document.getElementById("user-output-" + problem_name).value) {
         document.getElementById("result-label-" + problem_name).innerHTML = LANG.plugins.judge['error'];
@@ -99,13 +102,13 @@ function testCaseUpload() {
 
 function testCaseSubmit() {
     /** display previous submissions after first one */
-    if (jQuery("#previous_submissions-" + problem_name).css('display') == "none") {
-        jQuery("#previous_submissions-" + problem_name).slideToggle();
+    if (jQuery("#previous_submissions-" + problem_name_id).css('display') == "none") {
+        jQuery("#previous_submissions-" + problem_name_id).slideToggle();
     }
 
     /** open previous submissions box after new submit */
-    if (jQuery("#previous_submissions-table-" + problem_name).css('display') == "none") {
-        jQuery("#previous_submissions-table-" + problem_name).slideToggle();
+    if (jQuery("#previous_submissions-table-" + problem_name_id).css('display') == "none") {
+        jQuery("#previous_submissions-table-" + problem_name_id).slideToggle();
     }
 
     $url = DOKU_BASE + "lib/exe/ajax.php";
@@ -131,13 +134,13 @@ function testCaseSubmit() {
 
 function outputAnswer() {
     /** display previous submissions after first one */
-    if (jQuery("#previous_submissions-" + problem_name).css('display') == "none") {
-        jQuery("#previous_submissions-" + problem_name).slideToggle();
+    if (jQuery("#previous_submissions-" + problem_name_id).css('display') == "none") {
+        jQuery("#previous_submissions-" + problem_name_id).slideToggle();
     }
 
     /** open previous submissions box after new submit */
-    if (jQuery("#previous_submissions-table-" + problem_name).css('display') == "none") {
-        jQuery("#previous_submissions-table-" + problem_name).slideToggle();
+    if (jQuery("#previous_submissions-table-" + problem_name_id).css('display') == "none") {
+        jQuery("#previous_submissions-table-" + problem_name_id).slideToggle();
     }
 
     $url = DOKU_BASE + "lib/exe/ajax.php";
