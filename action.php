@@ -1,25 +1,7 @@
 <?php
-/**
- * dw2Pdf Plugin: Conversion from dokuwiki content to pdf.
- *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Luigi Micco <l.micco@tiscali.it>
- * @author     Andreas Gohr <andi@splitbrain.org>
- */
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();
 
-/**
- * Class action_plugin_dw2pdf
- *
- * Export hmtl content to pdf, for different url parameter configurations
- * DokuPDF which extends mPDF is used for generating the pdf from html.
- * class action_plugin_dw2pdf extends DokuWiki_Action_Plugin {
- * /**
- * Settings for current export, collected from url param, plugin config, global config
- *
- * @var array
- */
 class action_plugin_judge extends DokuWiki_Action_Plugin
 {
 
@@ -30,6 +12,7 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
      */
     public function register(Doku_Event_Handler $controller)
     {
+
         /** Submission button in top user menu bar */
         $controller->register_hook('TEMPLATE_USERTOOLS_DISPLAY', 'BEFORE', $this, 'addbutton');
 
@@ -46,6 +29,8 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
 
         /** Ajax calls */
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'ajaxHandler');
+
+
     }
 
     public function addbutton(Doku_Event $event)
