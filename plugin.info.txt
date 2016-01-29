@@ -1,0 +1,7 @@
+base judge
+author Sadrnezhaad
+email smmsadrnezh@gmail.com
+date 2015-12-20
+name Judge Plugin
+desc Programming judge plugin
+url http://dokuwiki.org/plugin:judge

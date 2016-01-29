@@ -1,0 +1,131 @@
+/** judge box keys */
+
+.judge {
+    background-color: #e5e4e9;
+    padding: 5px 7px;
+    margin: -7px 0 14px;
+    border-radius: 5px;
+}
+
+.judge > p {
+    font-weight: bold;
+    color: #2b73b7;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+/** judge box inside */
+
+.true {
+    color: #738d00;
+}
+
+.warning {
+    color: #f89406;
+}
+
+.false {
+    color: #c10841;
+}
+
+#user_submissions {
+    padding-left: 20px;
+    padding-right: 0;
+    background: transparent url(images/submissions.png) no-repeat 0 0;
+}
+
+[dir=rtl] #user_submissions {
+    padding-left: 0;
+    padding-right: 20px;
+    background: transparent url(images/submissions.png) no-repeat 0 0;
+}
+
+#user_submissions {
+    background-position: left 0;
+}
+
+[dir=rtl] #user_submissions {
+    background-position: right 0;
+}
+
+[dir=rtl] .judge form label.block, [dir=rtl] .judge div label.block, [dir=rtl] form.admin-form label.block {
+    text-align: right;
+}
+
+.judge form label.block, .judge div label.block, form.admin-form label.block {
+    text-align: left;
+}
+
+form.admin-form label {
+    margin: 5px;
+}
+
+form.admin-form label select {
+    max-width: 200px;
+}
+
+/** submission's code is running */
+
+.loader:before,
+.loader:after,
+.loader {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: load7 1.8s infinite ease-in-out;
+    animation: load7 1.8s infinite ease-in-out;
+}
+
+.loader {
+    font-size: 3px;
+    margin: 0px auto;
+    position: relative;
+    text-indent: -9999em;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+.loader:before {
+    left: -3.5em;
+    color: #FFFFFF;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.loader:after {
+    left: 3.5em;
+}
+
+.loader:before,
+.loader:after {
+    content: '';
+    position: absolute;
+    top: 0;
+}
+
+@-webkit-keyframes load7 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 2.5em 0 -1.3em #000000;
+    }
+    40% {
+        box-shadow: 0 2.5em 0 0 #000000;
+    }
+}
+
+@keyframes load7 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 2.5em 0 -1.3em #000000;
+    }
+    40% {
+        box-shadow: 0 2.5em 0 0 #000000;
+    }
+}
