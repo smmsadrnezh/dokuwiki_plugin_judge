@@ -1,7 +1,16 @@
 <?php
+/**
+ * Syntax Plugin: Displays judge forms, submissions and scoreboards
+ *
+ * @license    GPL 3 (http://www.gnu.org/licenses/gpl.html)
+ * @author     Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ * @author     Hamid Zarabi-Zadeh <zarrabi@sharif.edu>
+ */
 
 // must be run within Dokuwiki
-if (!defined('DOKU_INC')) die();
+if (!defined('DOKU_INC')) {
+    die();
+}
 
 class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
 {
@@ -42,10 +51,10 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
     /**
      * Handle matches of the judge syntax
      *
-     * @param string $match The text matched by the patterns
-     * @param int $state Type of pattern which triggered this call to handle()
-     * @param int $pos The character position of the matched text.
-     * @param Doku_Handler $handler The handler
+     * @param  string $match The text matched by the patterns
+     * @param  int $state Type of pattern which triggered this call to handle()
+     * @param  int $pos The character position of the matched text.
+     * @param  Doku_Handler $handler The handler
      * @return array Data for the renderer
      */
 
@@ -53,15 +62,21 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
     {
 
         if (substr($match, 2, 10) == "scoreboard") {
-            /** strip markup from start and end $match */
+            /**
+             * Strip markup from start and end $match
+             */
             $match = substr($match, 13, -2);
             return $this->scoreboard_handle($match);
         } elseif (substr($match, 2, 5) == "judge") {
-            /** strip markup from start and end $match */
+            /**
+             * Strip markup from start and end $match
+             */
             $match = substr($match, 8, -2);
             return $this->judge_handle($match);
         } elseif (substr($match, 2, 10) == "داوری") {
-            /** strip markup from start and end $match */
+            /**
+             * Strip markup from start and end $match
+             */
             $match = substr($match, 13, -2);
             return $this->judge_handle($match);
         }
@@ -71,7 +86,9 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
     public function scoreboard_handle($match)
     {
 
-        /** extract problem names into array */
+        /**
+         * Extract problem names into array
+         */
         $parameters = explode(' ', $match);
 
         return array('mode' => "scoreboard", 'questions' => $parameters);
@@ -82,14 +99,20 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
     {
         global $ID, $conf;
 
-        /** extract problem parameters into array */
+        /**
+         * Extract problem parameters into array
+         */
         $parameters = explode(' ', $match);
 
-        /** set problem parameters */
+        /**
+         * Set problem parameters
+         */
         foreach ($parameters as $parameter) {
             if (strpos($parameter, '=') == false) {
 
-                /** find variable type and set it */
+                /**
+                 * Find variable type and set it
+                 */
                 switch ($parameter) {
                     case "test-case":
                         $type = $parameter;
@@ -152,7 +175,9 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
 
                 switch ($key) {
 
-                    /** remove key string if included */
+                    /**
+                     * Remove key string if included
+                     */
                     case "problem":
                         $problem_name = $value;
                         break;
@@ -207,23 +232,30 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
             }
         }
 
-        /** set default value for parameters */
-        if ($problem_name == NULL)
+        /**
+         * Set default value for parameters
+         */
+        if ($problem_name == null) {
             $problem_name = $ID;
+        }
 
         $judge = "داوری:" . $problem_name;
 
-        if ($type === NULL)
+        if ($type === null) {
             $type = "test-case";
+        }
 
-        if ($runtime === NULL)
+        if ($runtime === null) {
             $runtime = 0;
+        }
 
-        if ($language === NULL)
+        if ($language === null) {
             $language = "all";
+        }
 
-        if ($method === NULL)
+        if ($method === null) {
             $method = "diff";
+        }
 
         if ($conf['useslash']) {
             $problem_name = str_replace('/', ':', $problem_name);
@@ -236,15 +268,17 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
     /**
      * Render xhtml output or metadata
      *
-     * @param string $mode Renderer mode (supported modes: xhtml)
-     * @param Doku_Renderer $renderer The renderer
-     * @param array $data The data from the handler() function
+     * @param  string $mode Renderer mode (supported modes: xhtml)
+     * @param  Doku_Renderer $renderer The renderer
+     * @param  array $data The data from the handler() function
      * @return bool If rendering was successful.
      */
     public
     function render($mode, Doku_Renderer &$renderer, $data)
     {
-        if ($mode != 'xhtml') return false;
+        if ($mode != 'xhtml') {
+            return false;
+        }
 
         if ($data["mode"] == "judge") {
             $renderer->doc .= $this->render_judge($data);
@@ -261,10 +295,14 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
 
         $html = '';
 
-        /** show plugin to logged in user */
+        /**
+         * Show plugin to logged in user
+         */
         if ($_SERVER['REMOTE_USER']) {
 
-            /** show plugin if problem_name page exists */
+            /**
+             * Show plugin if problem_name page exists
+             */
             if (page_exists($data['problem_name'])) {
                 $page_answer_exist = page_exists($data['judge']);
                 $media_files = array_filter(glob($conf['mediadir'] . "/" . str_replace("%3A", "/", urlencode($data['judge'])) . "/" . "*"));
@@ -334,14 +372,15 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
                     date_default_timezone_set('Asia/Tehran');
                     $db = new SQLite3(DBFILE);
                     $submissions = $db->querySingle('SELECT COUNT(*) FROM submissions WHERE problem_name = "' . $data['problem_name'] . '"AND username="' . $_SERVER['REMOTE_USER'] . '";');
-                    if (!empty($submissions))
+                    if (!empty($submissions)) {
                         $html .= '
                         <div class="judge" id="previous_submissions-' . $data['problem_name'] . '">
                     ';
-                    else
+                    } else {
                         $html .= '
                         <div class="judge" style="display: none;" id="previous_submissions-' . $data['problem_name'] . '">
                     ';
+                    }
 
                     $html .= '
                         <p onclick="jQuery(this).next().slideToggle();">' . $this->getLang('btn_previous_submissions') . '</p>
@@ -374,7 +413,9 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
                             <tbody  id="result-row-' . $data['problem_name'] . '">
                         ';
 
-                        /** get output-only submissions */
+                        /**
+                         * get output-only submissions
+                         */
                         $html .= $crud->tableRender(array('problem_name' => $data["problem_name"], 'type' => $data["type"], 'user' => $_SERVER['REMOTE_USER']), "html", 1, "timestamp")["submissions_table"];
                         $html .= '</tbody>';
                     }
@@ -394,22 +435,25 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
                 if (page_exists($data['problem_name'])) {
                     if (auth_quickaclcheck($data['judge']) >= AUTH_EDIT) {
                         if ($data['type'] === "test-case") {
-                            if ($media_answer_exist)
+                            if ($media_answer_exist) {
                                 $html .= '<div class="judge"><p><a target="_blank" href="?tab_files=files&do=media&ns=' . $data['judge'] . '">' . $this->getLang('btn_edit_testcase_long') . '</a></p></div>';
-                            elseif ($page_answer_exist)
+                            } elseif ($page_answer_exist) {
                                 $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['judge'] . '">' . $this->getLang('btn_edit_testcase_short') . '</a></p></div>';
-                            else
+                            } else {
                                 $html .= '<div class="judge"><p>' . $this->getLang('btn_submit_testcase') . ' (<a target="_blank" href="' . DOKU_URL . $data['judge'] . '?do=edit">' . $this->getLang('btn_submit_testcase_short') . '</a> - <a target="_blank" href="?tab_files=upload&do=media&ns=' . $data['judge'] . '">' . $this->getLang('btn_submit_testcase_long') . '</a>)</p></div>';
+                            }
 
                         } else {
-                            if ($page_answer_exist)
+                            if ($page_answer_exist) {
                                 $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['judge'] . '">' . $this->getLang('btn_edit_correct_answer') . '</a></p></div>';
-                            else
+                            } else {
                                 $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['judge'] . "?do=edit" . '">' . $this->getLang('btn_submit_correct_answer') . '</a></p></div>';
+                            }
                         }
                     }
-                } else
+                } else {
                     $html .= '<div class="judge"><p><a target="_blank" href="' . DOKU_URL . $data['problem_name'] . "?do=edit" . '">' . $this->getLang('btn_create_question_page') . '</a></p></div>';
+                }
             }
         }
 
@@ -418,7 +462,7 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
 
     public function render_scoreboard($data)
     {
-        $crud = plugin_load('helper', 'judge_crud', TRUE);
+        $crud = plugin_load('helper', 'judge_crud', true);
 
         $html = '
                 <div class="table sectionedit1">
@@ -433,8 +477,10 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
         $i = 1;
         foreach ($data["questions"] as &$problem_name) {
 
-            /** get output-only submissions */
-            $submissions = $crud->tableRender(array('problem_name' => $problem_name, 'type' => "test-case", 'user' => NULL), "html", $i, "timestamp");
+            /**
+             * Get output-only submissions
+             */
+            $submissions = $crud->tableRender(array('problem_name' => $problem_name, 'type' => "test-case", 'user' => null), "html", $i, "timestamp");
             $html .= $submissions["submissions_table"];
             $i = $submissions["count"];
 

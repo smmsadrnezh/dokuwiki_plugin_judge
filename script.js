@@ -1,4 +1,6 @@
-/** Choose File Input Field */
+/**
+ * Choose File Input Field
+ */
 
 function inputFileKey(problem_name) {
     $realInputField = document.getElementById("code-" + problem_name);
@@ -9,7 +11,9 @@ function changeFilePath(problem_name) {
     document.getElementById("code-file-" + problem_name).value = $realInputField.files[0].name;
 }
 
-/** Ajax Part */
+/**
+ * Ajax Part
+ */
 
 function resultRefresh(problem_name, type, user) {
 
@@ -40,14 +44,15 @@ var problem_name_id;
 
 function submitKey(problem_name, user, language, type, runtime, path) {
 
-    /** set variables form inputs */
+    /**
+     * set variables form inputs
+     */
     window["problem_name"] = problem_name;
     window["user"] = user;
     window["type"] = type;
     window["language"] = language;
     window["runtime"] = runtime;
     window["path"] = path;
-
     window["problem_name_id"] = problem_name.replace(/:/g, "\\:");
 
     if (type === "output-only" && !document.getElementById("user-output-" + problem_name).value) {
@@ -64,11 +69,13 @@ function submitKey(problem_name, user, language, type, runtime, path) {
     }
 
     if (type === "test-case") {
-        if (language == "all")
+        if (language == "all") {
             window["language"] = document.getElementById("language-" + problem_name).value;
+        }
         testCaseUpload();
-    } else
+    } else {
         outputAnswer();
+    }
 }
 
 function testCaseUpload() {
@@ -90,8 +97,9 @@ function testCaseUpload() {
                     document.getElementById("result-label-" + problem_name).innerHTML = LANG.plugins.judge['error'];
                     document.getElementById("result-" + problem_name).innerHTML = data;
                     document.getElementById("result-" + problem_name).className = "false";
-                } else
+                } else {
                     testCaseSubmit();
+                }
             },
             'json'
         );
@@ -101,15 +109,7 @@ function testCaseUpload() {
 }
 
 function testCaseSubmit() {
-    /** display previous submissions after first one */
-    if (jQuery("#previous_submissions-" + problem_name_id).css('display') == "none") {
-        jQuery("#previous_submissions-" + problem_name_id).slideToggle();
-    }
-
-    /** open previous submissions box after new submit */
-    if (jQuery("#previous_submissions-table-" + problem_name_id).css('display') == "none") {
-        jQuery("#previous_submissions-table-" + problem_name_id).slideToggle();
-    }
+    open();
 
     $url = DOKU_BASE + "lib/exe/ajax.php";
     jQuery.post(
@@ -133,15 +133,7 @@ function testCaseSubmit() {
 }
 
 function outputAnswer() {
-    /** display previous submissions after first one */
-    if (jQuery("#previous_submissions-" + problem_name_id).css('display') == "none") {
-        jQuery("#previous_submissions-" + problem_name_id).slideToggle();
-    }
-
-    /** open previous submissions box after new submit */
-    if (jQuery("#previous_submissions-table-" + problem_name_id).css('display') == "none") {
-        jQuery("#previous_submissions-table-" + problem_name_id).slideToggle();
-    }
+    open();
 
     $url = DOKU_BASE + "lib/exe/ajax.php";
     jQuery.post(
@@ -153,7 +145,9 @@ function outputAnswer() {
             problem_name: problem_name
         },
         function (data) {
-            /** Append to Result Table **/
+            /**
+             * Append to Result Table
+             **/
             outputSubmit(data[0]);
         },
         'json'
@@ -172,7 +166,9 @@ function outputSubmit($status) {
         $status_code = 0;
     }
 
-    /** Show Result **/
+    /**
+     * Show Result
+     **/
     document.getElementById("result-label-" + problem_name).innerHTML = LANG.plugins.judge['answer_status'];
     document.getElementById("result-" + problem_name).innerHTML = $fa_name;
     document.getElementById("result-" + problem_name).className = $name;
@@ -198,10 +194,12 @@ function outputSubmit($status) {
 
 function appendResult(status, number, date) {
 
-    if (type == "test-case")
+    if (type == "test-case") {
         var new_row = '<tr class="row1"><td class="col0">' + number + '</td><td class="col1">' + date + '</td><td class="col2">' + language + '</td><td class="col3"><div class="loader"></div>' + '</td></tr>';
-    else
+    }
+    else {
         var new_row = '<tr class="row1"><td class="col0">' + number + '</td><td class="col1">' + date + '</td><td class="col2">' + status + '</td></tr>';
+    }
 
     document.getElementById("result-row-" + problem_name).innerHTML += new_row;
 }
@@ -221,4 +219,20 @@ function judge(id) {
         );
     };
     r.readAsText(document.getElementById("code-" + problem_name).files[0]);
+}
+
+function open() {
+    /**
+     * display previous submissions button after new submit
+     */
+    if (jQuery("#previous_submissions-" + problem_name_id).css('display') == "none") {
+        jQuery("#previous_submissions-" + problem_name_id).slideToggle();
+    }
+
+    /**
+     * display previous submissions box contents after new submit
+     */
+    if (jQuery("#previous_submissions-table-" + problem_name_id).css('display') == "none") {
+        jQuery("#previous_submissions-table-" + problem_name_id).slideToggle();
+    }
 }

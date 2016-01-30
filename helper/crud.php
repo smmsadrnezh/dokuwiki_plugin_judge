@@ -1,9 +1,16 @@
 <?php
+/**
+ * Helper Plugin: Create, Read, Update and Delete on submissions
+ *
+ * @license GPL 3 (http://www.gnu.org/licenses/gpl.html)
+ * @author  Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ */
+
 
 if (!defined('DOKU_INC')) {
     define('DOKU_INC', dirname(__FILE__) . '/../../../../');
-    require_once(DOKU_INC . 'inc/init.php');
-    require_once(DOKU_INC . 'inc/plugin.php');
+    include_once DOKU_INC . 'inc/init.php';
+    include_once DOKU_INC . 'inc/plugin.php';
 }
 
 class helper_plugin_judge_crud extends DokuWiki_Plugin
@@ -18,45 +25,54 @@ class helper_plugin_judge_crud extends DokuWiki_Plugin
 
     public function tableRender($data, $mode, $count = 1, $sort = "timestamp")
     {
-        /** find submissions */
+        /**
+         * Find submissions
+         */
         $results = $this->getSubmissions($data, $sort);
 
         if (!$results) {
-            return Array('submissions_table' => NULL, 'count' => 0);
+            return Array('submissions_table' => null, 'count' => 0);
         }
 
-        /** building result table */
+        /**
+         * Building result table
+         */
         $table = '';
         $i = $count;
         $table_data = Array();
         if ($data["type"] == "output-only") {
             while ($row = $results->fetchArray()) {
-                if ($mode == "html" && is_null($data["problem_name"]))
+                if ($mode == "html" && is_null($data["problem_name"])) {
                     $table_data[] = Array($i, '<a href="' . $row["problem_name"] . '">' . $row["problem_name"] . '</a>', $this->convert_time($row["timestamp"]), ($row["status_code"] == '1' ? "درست" : "نادرست"));
-                elseif ($mode == "html" && !is_null($data["problem_name"]))
+                } elseif ($mode == "html" && !is_null($data["problem_name"])) {
                     $table_data[] = Array($i, $this->convert_time($row["timestamp"]), ($row["status_code"] == '1' ? "درست" : "نادرست"));
-                elseif ($mode == "csv")
+                } elseif ($mode == "csv") {
                     $table .= $i . "\toutput-only\t" . $row["problem_name"] . "\t" . $this->convert_time($row["timestamp"]) . "\t \t" . ($row["status_code"] == '1' ? "درست" : "نادرست") . "\n";
+                }
                 $i += 1;
             }
         } elseif ($data["type"] == "test-case") {
             while ($row = $results->fetchArray()) {
                 $language = $this->
                 db->query('SELECT language FROM submission_test_case WHERE submit_id = ' . $row["submit_id"] . ';')->fetchArray();
-                if ($row["status_code"] == '0')
+                if ($row["status_code"] == '0') {
                     $valid_text = '<div class="loader"></div>';
-                else
+                } else {
                     $valid_text = $this->valid_text($row["submit_id"]);
+                }
 
-                /** table rendering */
-                if ($mode == "html" && is_null($data["user"]))
+                /**
+                 * table rendering
+                 */
+                if ($mode == "html" && is_null($data["user"])) {
                     $table_data[] = Array($i, '<a href="' . $row["problem_name"] . '">' . $row["problem_name"] . '</a>', $row['username'], $this->convert_time($row["timestamp"]), $language[0], $valid_text);
-                elseif ($mode == "html" && is_null($data["problem_name"]))
+                } elseif ($mode == "html" && is_null($data["problem_name"])) {
                     $table_data[] = Array($i, '<a href="' . $row["problem_name"] . '">' . $row["problem_name"] . '</a>', $this->convert_time($row["timestamp"]), $language[0], $valid_text);
-                elseif ($mode == "html" && !is_null($data["problem_name"]))
+                } elseif ($mode == "html" && !is_null($data["problem_name"])) {
                     $table_data[] = Array($i, $this->convert_time($row["timestamp"]), $language[0], $valid_text);
-                elseif ($mode == "csv")
+                } elseif ($mode == "csv") {
                     $table .= $i . "\ttest-case\t" . $row["problem_name"] . "\t" . $this->convert_time($row["timestamp"]) . "\t" . $language[0] . "\t" . $this->valid_text($row["submit_id"]) . "\n";
+                }
                 $i += 1;
             }
         } else {
@@ -76,8 +92,9 @@ class helper_plugin_judge_crud extends DokuWiki_Plugin
         }
         if ($mode == "html") {
             $table_row = Array();
-            foreach ($table_data as &$data)
+            foreach ($table_data as &$data) {
                 $table_row[] = join($data, '</td><td class="col0">');
+            }
             $table = '<tr class="row0"><td class="col0">' . join($table_row, '</td></tr><tr class="row0"><td class="col0">') . '</td></tr>';
         }
 
@@ -87,24 +104,32 @@ class helper_plugin_judge_crud extends DokuWiki_Plugin
     public function getSubmissions($data, $sort = "timestamp")
     {
 
-        /** building the query */
+        /**
+         * Building the query
+         */
         $query = array();
-        if (!empty($data["problem_name"]))
+        if (!empty($data["problem_name"])) {
             $query[] = 'problem_name = "' . $data["problem_name"] . '"';
-        if (!empty($data["user"]))
+        }
+        if (!empty($data["user"])) {
             $query[] = 'username = "' . $data["user"] . '"';
-        if (!empty($data["type"]))
+        }
+        if (!empty($data["type"])) {
             $query[] = 'type = "' . $data["type"] . '"';
+        }
 
-        if (empty($data["problem_name"]) && empty($data["user"]) && empty($data["type"]))
+        if (empty($data["problem_name"]) && empty($data["user"]) && empty($data["type"])) {
             $query = 'SELECT * FROM submissions ORDER BY "' . $sort . '" ASC ;';
-        else
+        } else {
             $query = 'SELECT * FROM submissions WHERE ' . join($query, " AND ") . ' ORDER BY "' . $sort . '" ASC ;';
+        }
 
-        /** running the query */
+        /**
+         * Running the query
+         */
         $results = $this->db->query($query);
         if (!is_array($results->fetchArray())) {
-            return False;
+            return false;
         }
         $results->reset();
         return $results;
@@ -113,12 +138,13 @@ class helper_plugin_judge_crud extends DokuWiki_Plugin
     public function convert_time($timestamp)
     {
         global $conf;
-        require_once dirname(__FILE__) . '/jdatetime.class.php';
+        include_once dirname(__FILE__) . '/jdatetime.class.php';
         $pdate = new jDateTime(false, true, 'Asia/Tehran');
-        if ($conf['lang'] == "fa")
+        if ($conf['lang'] == "fa") {
             return $pdate->date("l j F Y H:i:s", $timestamp);
-        else
+        } else {
             return date('l j F Y H:i:s', $timestamp);
+        }
     }
 
     public function valid_text($id)
@@ -141,7 +167,9 @@ class helper_plugin_judge_crud extends DokuWiki_Plugin
     public function delSubmissions($data)
     {
 
-        /** get Submissions */
+        /**
+         * Get Submissions
+         */
         $results = $this->getSubmissions($data);
 
         if (!$results) {
@@ -149,13 +177,17 @@ class helper_plugin_judge_crud extends DokuWiki_Plugin
         }
 
         while ($row = $results->fetchArray()) {
-            /** Remove Uploaded Codes */
+            /**
+             * Remove Uploaded Codes
+             */
             if ($row["type"] == "test-case") {
                 $targetdir = $this->getConf('upload_path');
-                if (substr($targetdir, -1) != "/")
+                if (substr($targetdir, -1) != "/") {
                     $targetdir .= "/";
-                if (substr($targetdir, 1) != "/")
+                }
+                if (substr($targetdir, 1) != "/") {
                     $targetdir = "/" . $targetdir;
+                }
                 $file_pattern = $targetdir . $row["submit_id"] . ".*";
                 array_map("unlink", glob("$file_pattern"));
 

@@ -1,6 +1,15 @@
 <?php
+/**
+ * Syntax Plugin: Action on Ajax requests, My submissions page and export CSV
+ *
+ * @license GPL 3 (http://www.gnu.org/licenses/gpl.html)
+ * @author  Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ */
+
 // must be run within Dokuwiki
-if (!defined('DOKU_INC')) die();
+if (!defined('DOKU_INC')) {
+    die();
+}
 
 class action_plugin_judge extends DokuWiki_Action_Plugin
 {
@@ -13,27 +22,37 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
     public function register(Doku_Event_Handler $controller)
     {
 
-        /** Submission button in top user menu bar */
-        $controller->register_hook('TEMPLATE_USERTOOLS_DISPLAY', 'BEFORE', $this, 'addbutton');
+        /**
+         * Submission button in top user menu bar
+         */
+        $controller->register_hook('TEMPLATE_USERTOOLS_DISPLAY', 'BEFORE', $this, 'addButton');
 
-        /** Submissions page content */
+        /**
+         * Submissions page content
+         */
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'submissionsPageAction');
         $controller->register_hook('TPL_ACT_UNKNOWN', 'BEFORE', $this, 'submissionsPageContent');
 
-        /** Remove page cache after login */
+        /**
+         * Remove page cache after login
+         */
         $controller->register_hook('AUTH_LOGIN_CHECK', 'AFTER', $this, 'removePageCache');
 
-        /** export to csv icon in submissions page */
+        /**
+         * export to csv icon in submissions page
+         */
         $controller->register_hook('TEMPLATE_PAGETOOLS_DISPLAY', 'BEFORE', $this, 'addCsvButton', array());
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'exportToCSV');
 
-        /** Ajax calls */
+        /**
+         * Ajax calls
+         */
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'ajaxHandler');
 
 
     }
 
-    public function addbutton(Doku_Event $event)
+    public function addButton(Doku_Event $event)
     {
         if ($_SERVER['REMOTE_USER']) {
             $event->data['items'] = array_slice($event->data['items'], 0, -1, true)
@@ -44,14 +63,18 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
 
     public function submissionsPageAction(&$event)
     {
-        if ($event->data != 'submissions') return;
+        if ($event->data != 'submissions') {
+            return;
+        }
         $event->preventDefault();
         return true;
     }
 
     public function submissionsPageContent(&$event)
     {
-        if ($event->data != 'submissions') return;
+        if ($event->data != 'submissions') {
+            return;
+        }
         $event->preventDefault();
 
         $table_html = $this->buildResultTable();
@@ -108,7 +131,9 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
     public function addCsvButton(Doku_Event $event)
     {
         global $ID, $ACT;
-        if ($ACT != 'submissions') return;
+        if ($ACT != 'submissions') {
+            return;
+        }
         if ($event->data['view'] == 'main') {
             $params = array('do' => 'export_csv');
 
@@ -127,7 +152,9 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
 
     public function exportToCSV(&$event)
     {
-        if ($event->data != 'export_csv') return;
+        if ($event->data != 'export_csv') {
+            return;
+        }
         $event->preventDefault();
         $crud = plugin_load('helper', 'judge_crud');
         ob_start('ob_gzhandler');
@@ -169,19 +196,9 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
                 define('DBFILE', dirname(__FILE__) . '/submissions.sqlite');
                 define('DBENGINE', 'sqlite3');
 
-                if (file_exists(DBFILE))
+                if (file_exists(DBFILE)) {
                     $data = $this->submit_to_db();
-
-                else
-                    /** create database if it does not exist. */
-                    try {
-                        echo "you don't have database file.";
-                        $db = new PDO('sqlite3:', DBFILE);
-                        echo "database successfuly created in " . DBFILE;
-                    } catch (Exception $e) {
-                        echo "$e->getMessage()";
-                    }
-                break;
+                }
             case "outputonlyResult":
                 $data[] = $this->compare($INPUT->str('user_output'), $INPUT->str('problem_name'));
                 break;
@@ -217,13 +234,13 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
 
         if (!defined('DOKU_INC')) {
             define('DOKU_INC', dirname(__FILE__) . '/../../../../');
-            require_once(DOKU_INC . 'inc/init.php');
-            require_once(DOKU_INC . 'inc/plugin.php');
+            include_once DOKU_INC . 'inc/init.php';
+            include_once DOKU_INC . 'inc/plugin.php';
         }
 
         global $conf;
 
-        require_once dirname(__FILE__) . '/helper/jdatetime.class.php';
+        include_once dirname(__FILE__) . '/helper/jdatetime.class.php';
         $pdate = new jDateTime(false, true, 'Asia/Tehran');
         date_default_timezone_set('Asia/Tehran');
         $query = 'INSERT INTO submissions VALUES (NULL,"' . time() . '","' . $_POST['problem_name'] . '","' . $_POST['user'] . '","' . $_POST['type'] . '",' . $_POST['status_code'] . ')';
@@ -234,10 +251,11 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
         $result_id_query = 'SELECT COUNT(*) FROM submissions WHERE problem_name = "' . $_POST['problem_name'] . '"AND username="' . $_POST['user'] . '"';
         $row_number = $db->querySingle($result_id_query);
 
-        if ($conf['lang'] == "fa")
+        if ($conf['lang'] == "fa") {
             $date = $pdate->date("l j F Y H:i:s");
-        else
+        } else {
             $date = date('l j F Y H:i:s');
+        }
 
         if ($_POST['type'] === "output-only") {
             $result = array('date' => $date, 'row_number' => $row_number);
@@ -253,10 +271,11 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
     {
         $extension = $this->loadHelper('judge_numbers');
         $answer = $extension->parseNumber(rawWiki("داوری:" . $problem_name));
-        if ($answer == $extension->parseNumber($user_output))
-            return TRUE;
-        else
-            return FALSE;
+        if ($answer == $extension->parseNumber($user_output)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function upload($filename, $path, $code)
@@ -268,10 +287,12 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
         }
 
         $targetdir = $path;
-        if (substr($targetdir, -1) != "/")
+        if (substr($targetdir, -1) != "/") {
             $targetdir .= "/";
-        if (substr($targetdir, 1) != "/")
+        }
+        if (substr($targetdir, 1) != "/") {
             $targetdir = "/" . $targetdir;
+        }
 
         $temp = explode(".", $filename);
 

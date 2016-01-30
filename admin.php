@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Admin Plugin: View and Delete Submissions in Admin Area
+ *
+ * @license GPL 3 (http://www.gnu.org/licenses/gpl.html)
+ * @author  Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
+ */
 class admin_plugin_judge extends DokuWiki_Admin_Plugin
 {
 
@@ -9,10 +15,15 @@ class admin_plugin_judge extends DokuWiki_Admin_Plugin
     function handle()
     {
 
-        if (!isset($_REQUEST['cmd'])) return;   // first time - nothing to do
-
-        if (!checkSecurityToken()) return;
-        if (!is_array($_REQUEST['cmd'])) return;
+        if (!isset($_REQUEST['cmd'])) {
+            return;   // first time - nothing to do
+        }
+        if (!checkSecurityToken()) {
+            return;
+        }
+        if (!is_array($_REQUEST['cmd'])) {
+            return;
+        }
 
         $crud = plugin_load('helper', 'judge_crud', true);
 
@@ -22,8 +33,8 @@ class admin_plugin_judge extends DokuWiki_Admin_Plugin
                 $this->output = '<div class="table sectionedit1">
                                     <table class="inline">';
                 $table = $crud->tableRender(array('problem_name' => $_REQUEST['problem_name'], 'type' => $_REQUEST['type'], 'user' => $_REQUEST['user']), "html", 1, "timestamp");
-                if($table["count"] == 0){
-                    $this->output .= '<p>'. $this->getLang("empty_result") .'</p>';
+                if ($table["count"] == 0) {
+                    $this->output .= '<p>' . $this->getLang("empty_result") . '</p>';
                     break;
                 } else {
                     $this->output .= $table["submissions_table"];
@@ -53,8 +64,8 @@ class admin_plugin_judge extends DokuWiki_Admin_Plugin
             <label class="block">' . $this->getLang("question_name") . ': <input name="problem_name" type="text" /></label>
             <label class="block">' . $this->getLang("sender") . ':
             <select name="user">
-            <option value="">' . $this->getLang("all_users") .'</option>';
-        while ($user = current($users)){
+            <option value="">' . $this->getLang("all_users") . '</option>';
+        while ($user = current($users)) {
             $html .= '<option value="' . key($users) . '">' . $user["name"] . '</option>';
             next($users);
         }
@@ -64,7 +75,7 @@ class admin_plugin_judge extends DokuWiki_Admin_Plugin
             </label>
             <label class="block">
             <input type="radio" name="type" value="test-case"> ' . $this->getLang('programming_questions') . '<br />
-            <input type="radio" name="type" value="output-only"> ' . $this->getLang('outputonly_questions'). '
+            <input type="radio" name="type" value="output-only"> ' . $this->getLang('outputonly_questions') . '
             </label>';
 
         // output hidden values to ensure dokuwiki will return back to this plugin
