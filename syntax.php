@@ -58,7 +58,7 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
      * @return array Data for the renderer
      */
 
-    public function handle($match, $state, $pos, Doku_Handler &$handler)
+    public function handle($match, $state, $pos, Doku_Handler $handler)
     {
 
         if (substr($match, 2, 10) == "scoreboard") {
@@ -274,7 +274,7 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
      * @return bool If rendering was successful.
      */
     public
-    function render($mode, Doku_Renderer &$renderer, $data)
+    function render($mode, Doku_Renderer $renderer, $data)
     {
         if ($mode != 'xhtml') {
             return false;
