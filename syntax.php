@@ -472,24 +472,21 @@ class syntax_plugin_judge extends DokuWiki_Syntax_Plugin
                                     <th class="col0">' . $this->getLang('count_number') . '</th><th class="col1">' . $this->getLang('question_name') . '</th><th class="col1">' . $this->getLang('sender') . '</th><th class="col2">' . $this->getLang('timestamp') . '</th><th class="col3">' . $this->getLang('language') . '</th><th class="col4">' . $this->getLang('status') . '</th>
                                 </tr>
                             </thead>
-                            <tbody  id="result-row-' . $data['problem_name'] . '">';
+                            <tbody  id="scoreboard-row-' . implode(",",$data['questions']) . '">';
 
         $i = 1;
         foreach ($data["questions"] as &$problem_name) {
-
-            /**
-             * Get output-only submissions
-             */
             $submissions = $crud->tableRender(array('problem_name' => $problem_name, 'type' => "test-case", 'user' => null), "html", $i, "timestamp");
             $html .= $submissions["submissions_table"];
             $i = $submissions["count"];
-
         }
 
         $html .= '
                             </tbody>
                     </table>
-                </div>';
+                </div>
+                <input class="button" type="submit" onclick="resultRefresh(' . "'" . implode(",",$data['questions']) . "','test-case','null'" . '); return false;" value="' . $this->getLang('table_update') . '" tabindex="4" />
+                ';
 
         return $html;
     }

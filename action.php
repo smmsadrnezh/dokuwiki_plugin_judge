@@ -1,6 +1,6 @@
 <?php
 /**
- * Syntax Plugin: Action on Ajax requests, My submissions page and export CSV
+ * Action Plugin: Action on Ajax requests, My submissions page and export CSV
  *
  * @license GPL 3 (http://www.gnu.org/licenses/gpl.html)
  * @author  Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
@@ -218,6 +218,17 @@ class action_plugin_judge extends DokuWiki_Action_Plugin
                 break;
             case "upload":
                 $data[] = $this->upload($INPUT->str('file_name'), $INPUT->str('path'), $INPUT->str('code'));
+                break;
+            case "scoreboardRefresh":
+                $crud = plugin_load('helper', 'judge_crud');
+                $i = 1;
+                $html = "";
+                foreach (explode(",",$INPUT->str('questions')) as &$problem_name) {
+                    $submissions = $crud->tableRender(array('problem_name' => $problem_name, 'type' => "test-case", 'user' => null), "html", $i, "timestamp");
+                    $html .= $submissions["submissions_table"];
+                    $i = $submissions["count"];
+                }
+                $data[] = $html;
                 break;
         }
 

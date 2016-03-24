@@ -16,22 +16,37 @@ function changeFilePath(problem_name) {
  */
 
 function resultRefresh(problem_name, type, user) {
-
-    $url = DOKU_BASE + "lib/exe/ajax.php";
-    jQuery.post(
-        $url,
-        {
-            call: 'plugin_judge',
-            name: 'resultRefresh',
-            user: user,
-            problem_name: problem_name,
-            type: type
-        },
-        function (data) {
-            document.getElementById("result-row-" + problem_name).innerHTML = data;
-        },
-        'json'
-    );
+    if (user === "null" && type === "test-case") {
+        $url = DOKU_BASE + "lib/exe/ajax.php";
+        jQuery.post(
+            $url,
+            {
+                call: 'plugin_judge',
+                name: 'scoreboardRefresh',
+                questions: problem_name
+            },
+            function (data) {
+                document.getElementById("scoreboard-row-" + problem_name.toString()).innerHTML = data;
+            },
+            'json'
+        );
+    } else {
+        $url = DOKU_BASE + "lib/exe/ajax.php";
+        jQuery.post(
+            $url,
+            {
+                call: 'plugin_judge',
+                name: 'resultRefresh',
+                user: user,
+                problem_name: problem_name,
+                type: type
+            },
+            function (data) {
+                document.getElementById("result-row-" + problem_name).innerHTML = data;
+            },
+            'json'
+        );
+    }
 }
 
 var problem_name;

@@ -11,6 +11,7 @@ class helper_plugin_judge_numbers extends DokuWiki_Plugin
 
     public function parseNumber($number)
     {
+        $digits = Array();
         for ($i = 0; $i < mb_strlen($number, "UTF-8"); $i++) {
             $digits[$i] = $this->ordutf8(mb_substr($number, $i, 1, "UTF-8"));
             if (1776 <= $digits[$i] && $digits[$i] < 1786) {
