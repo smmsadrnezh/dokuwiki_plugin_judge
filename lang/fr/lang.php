@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author ubibene <services.m@benard.info>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  */
 $lang['btn_submit_answer']     = 'Soumettre sa réponse';
@@ -27,28 +28,26 @@ $lang['timestamp']             = 'Heure';
 $lang['status']                = 'Statut';
 $lang['sender']                = 'Expéditeur';
 $lang['language']              = 'Langue';
-$lang['table_update']          = 'Mise à jour';
-$lang['runtime_error']         = 'Erreur d\'exécution';
-$lang['compile_error']         = 'Erreur de compilation';
+$lang['table_update']          = 'Mettre à jour';
+$lang['runtime_error']         = 'Erreur d\'Exécution';
+$lang['compile_error']         = 'Erreur de Compilation';
 $lang['wrong']                 = 'Faux';
 $lang['correct']               = 'Correct';
 $lang['btn_my_submissions']    = 'Mes soumissions';
-$lang['programming_questions'] = 'Questions programmées';
-$lang['outputonly_questions']  = 'Question de sortie seulement';
+$lang['outputonly_questions']  = 'Afficher seulement les questions.';
 $lang['programming_question']  = 'Programmation';
-$lang['outputonly_question']   = 'Sortie seulement';
-$lang['question_name']         = 'Intitulé de la question';
+$lang['question_name']         = 'Nom de la Question';
 $lang['btn_export_csv']        = 'Exporter en CSV';
-$lang['menu']                  = 'Voir & supprimer les soumissions des utilisateurs';
+$lang['menu']                  = 'Voir & Supprimer les Soumissions';
 $lang['btn_get_submissions']   = 'Voir';
 $lang['btn_delete_submissions'] = 'Supprimer';
 $lang['all_users']             = 'Tous les utilisateurs';
-$lang['intro_message']         = 'Remplir le formulaire avec les paramètres des utilisateurs, puis appuyer sur le bouton «voir» ou le bouton «effacer»';
+$lang['intro_message']         = 'Remplir le formulaire avec les paramètre de soumission des utilisateurs, puis appuyer sur le bouton voir ou supprimer.';
 $lang['empty_result']          = 'Pas de résultat.';
-$lang['delete_success']        = 'Soumissions effacées avec succès';
+$lang['delete_success']        = 'Soumissions supprimées avec succès.';
 $lang['js']['error']           = 'Erreur:';
-$lang['js']['answer_not_specified'] = 'Réponse non précisée.';
-$lang['js']['file_not_specified'] = 'Fichier non précisé.';
+$lang['js']['answer_not_specified'] = 'Réponse non spécifiée.';
+$lang['js']['file_not_specified'] = 'Fichier non spécifié.';
 $lang['js']['answer_status']   = 'Statut de la réponse:';
 $lang['js']['correct']         = 'correct';
 $lang['js']['wrong']           = 'faux';
