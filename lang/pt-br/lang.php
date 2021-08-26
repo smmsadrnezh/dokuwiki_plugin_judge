@@ -4,22 +4,23 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Alexandre Belchior <alexbelchior@gmail.com>
+ * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  */
 $lang['btn_submit_answer']     = 'Envie a resposta';
-$lang['btn_previous_submissions'] = 'Submissões anteriores';
-$lang['btn_create_question_page'] = 'Criar página de pergunta';
+$lang['btn_previous_submissions'] = 'Envios anteriores';
+$lang['btn_create_question_page'] = 'Criar página de perguntas';
 $lang['btn_submit_correct_answer'] = 'Envie a resposta correta';
-$lang['btn_submit_testcase']   = 'Enviar casos de teste';
+$lang['btn_submit_testcase']   = 'Enviar Casos de Teste';
 $lang['btn_submit_testcase_short'] = 'Curto';
 $lang['btn_submit_testcase_long'] = 'Longo';
-$lang['btn_edit_testcase_short'] = 'Editar casos de teste curtos';
-$lang['btn_edit_testcase_long'] = 'Editar casos de teste longos';
-$lang['btn_edit_correct_answer'] = 'Editar resposta correta';
-$lang['choose_language']       = 'Linguagem:';
-$lang['btn_choose_file']       = 'Escolha o arquivo';
+$lang['btn_edit_testcase_short'] = 'Editar Casos de Teste Curtos';
+$lang['btn_edit_testcase_long'] = 'Editar Casos de Teste Longos';
+$lang['btn_edit_correct_answer'] = 'Editar a resposta correta';
+$lang['choose_language']       = 'Idioma:';
+$lang['btn_choose_file']       = 'Escolher arquivo';
 $lang['btn_submit']            = 'Enviar';
-$lang['err_file_format']       = 'Formato do arquivo não permitido.';
-$lang['err_file_exist']        = 'O Arquivo existe no servidor.';
+$lang['err_file_format']       = 'Formato de arquivo não permitido.';
+$lang['err_file_exist']        = 'O arquivo existe no servidor.';
 $lang['err_upload_dir']        = 'não existe no servidor. crie-o ou especifique outro diretório nas configurações do plugin.';
 $lang['err_dir']               = 'diretório';
 $lang['count_number']          = '#';
