@@ -4,25 +4,26 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author ubibene <services.m@benard.info>
+ * @author Nicolas Friedli <nicolas@theologique.ch>
  */
-$lang['btn_submit_answer']     = 'Soumettre la Réponse';
-$lang['btn_previous_submissions'] = 'Soumission Précédente';
-$lang['btn_create_question_page'] = 'Créer la Page de Question';
-$lang['btn_submit_correct_answer'] = 'Soumettre La Réponse Correcte';
-$lang['btn_submit_testcase']   = 'Soumettre les Cas de Tests';
+$lang['btn_submit_answer']     = 'Soumettre sa réponse';
+$lang['btn_previous_submissions'] = 'Soumissions précédentes';
+$lang['btn_create_question_page'] = 'Créer une page de question';
+$lang['btn_submit_correct_answer'] = 'Soumettre la réponse correcte';
+$lang['btn_submit_testcase']   = 'Soumettre des tests';
 $lang['btn_submit_testcase_short'] = 'Court';
 $lang['btn_submit_testcase_long'] = 'Long';
-$lang['btn_edit_testcase_short'] = 'Modifier les Cas de Tests Courts';
-$lang['btn_edit_testcase_long'] = 'Modifier les Cas de Tests Longs';
-$lang['btn_edit_correct_answer'] = 'Modifier la Réponse Correcte';
+$lang['btn_edit_testcase_short'] = 'Éditer les tests courts';
+$lang['btn_edit_testcase_long'] = 'Éditer les tests longs';
+$lang['btn_edit_correct_answer'] = 'Éditer la réponse correcte';
 $lang['choose_language']       = 'Langue:';
-$lang['btn_choose_file']       = 'Choisir un Fichier';
+$lang['btn_choose_file']       = 'Choisir un fichier';
 $lang['btn_submit']            = 'Soumettre';
-$lang['err_file_format']       = 'Format de fichier non autorisé.';
+$lang['err_file_format']       = 'Le format de fichier n\'est pas accepté.';
 $lang['err_file_exist']        = 'Le fichier existe sur le serveur.';
-$lang['err_upload_dir']        = 'n\'existe pas sur le serveur. créer le ou définir un autre répertoire dans les configurations de plugin.';
-$lang['err_dir']               = 'Répertoire';
-$lang['count_number']          = 'N°';
+$lang['err_upload_dir']        = 'n\'existe pas sur le serveur. Il faut le créer ou préciser un autre répertoire dans la configuration du plugin.';
+$lang['err_dir']               = 'répertoire';
+$lang['count_number']          = '#';
 $lang['timestamp']             = 'Heure';
 $lang['status']                = 'Statut';
 $lang['sender']                = 'Expéditeur';
